@@ -1,5 +1,6 @@
 import NextImage from "next/image"
 import NextLink from  "next/link"
+import MenuItem from "./menuItem.tsx"
 import {Box,List,ListIcon,ListItem,Divider,Center,LinkBox,LinkOverlay} from "@chakra-ui/layout";
 import {MdHome,MdSearch,MdLibraryMusic,MdPlaylistAdd,MdFavorite} from "react-icons/md";
 
@@ -21,6 +22,20 @@ const navMenu = [
     }
 ]
 
+const musicMenu =[
+    {
+        name: "Create playlist",
+        icon: MdPlaylistAdd,
+        route: "/"
+    },
+    {
+        name: "Favorites",
+        icon: MdFavorite,
+        route: "/favorites"
+    },
+]
+
+const playlists = new Array(30).fill(1).map((_,i)=> `Playlist ${i+1}`)
 
 
 const Sidebar = () => {
@@ -32,19 +47,21 @@ const Sidebar = () => {
             paddingX="5px"
             color="gray"
         >
-            <Box paddingY="20px">
+            <Box paddingY="20px" height="100%">
                 <Box width="120px" marginBottom="20px" paddingX="20px">
                     <NextImage src="/logo.svg" height={60} width={120}/>
                 </Box>
-                <Box marginBottom="20px">
+                <MenuItem menu={navMenu}/>
+                <MenuItem menu={musicMenu}/>
+                <Divider color="gray.800"/>
+                <Box height="66%" overflowY="auto" paddingY="20px">
                     <List spacing={2}>
-                        {navMenu.map(menu => (
-                            <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
+                        {playlists.map((playlist)=> (
+                            <ListItem paddingX="20px" key={playlist}>
                                 <LinkBox>
-                                    <NextLink href={menu.route} passHref>
+                                    <NextLink href="/" passHref>
                                         <LinkOverlay>
-                                            <ListIcon as={menu.icon} color="white" marginRight="20px"/>
-                                            {menu.name}
+                                            {playlist}
                                         </LinkOverlay>
                                     </NextLink>
                                 </LinkBox>
